@@ -1,0 +1,26 @@
+shutil --> Built in python library for Move/Copy files
+time --> built in library to add delay
+path --> modern way to handle the file/folder path in a clean way than copying the path string
+observer --> a watcher that observers the folders in background thread
+FileSystemEventHandler --> a base class we inherit from it has methods like on_created, on_deleted, on_modified that we can override
+
+if any variable that mentioned in CAPS, that means it is constants. example: FOLDER_A --> path is constant.
+
+class FileMover(FileSystemEventHandler) 
+-----> we created class that inherits the base class
+
+def on_created(self, event): 
+----> This method automatically fires whenever a new file or folder is created inside the watched folder
+event --> It is an object that contains info about what was created — like the file path, whether it's a file or directory etc.
+
+try:
+    while True:
+        time.sleep(1)
+except KeyboardInterrupt:
+    observer.stop()
+observer.join()
+------>
+The observer runs in a background thread, so the main program would exit immediately without this loop
+while True: time.sleep(1) keeps the script alive indefinitely
+except KeyboardInterrupt — when you press Ctrl+C, it catches that and gracefully stops the observer
+observer.join() — waits for the background thread to fully finish before exiting
